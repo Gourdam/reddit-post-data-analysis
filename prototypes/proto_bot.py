@@ -8,7 +8,7 @@ class RedditBot:
         self.cache = []
         self.r = praw.Reddit(user_agent = user_agent)
         # Hardcoded to test post right now
-        self.post = self.r.get_submission(submission_id = "4ggj41")
+        self.post = self.r.get_submission(submission_id = "4ggj41")v
 
     def login(self):
         self.r.login()

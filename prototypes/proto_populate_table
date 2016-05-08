@@ -1,0 +1,8 @@
+CREATE TABLE posts (
+	post_id VARCHAR(6),
+	subreddit VARCHAR(20),
+	title VARCHAR(300),
+	author VARCHAR(20),
+	url VARCHAR(512),
+	timestamp_created int(8)
+);
