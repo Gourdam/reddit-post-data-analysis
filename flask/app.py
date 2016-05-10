@@ -3,9 +3,11 @@ from flask import Flask, render_template, redirect, url_for, request, session,\
     flash, g
 import sqlite3
 import re
+import time
+from multiprocessing import Process
 
 # Private
-from scripts import utils, redditbot
+from scripts import utils, redditBot, redditDatabase
 
 # create application object
 app = Flask(__name__)
@@ -14,31 +16,6 @@ app.database = "proto_database.db"
 
 # secret key for cookies *MUST CHANGE FOR SECURITY*
 app.secret_key = b'\xd0\x10\x0b$\x0fk\xbe%\xc6\x1b\xe4\xd1\xf0\xe0\xd4\x0210\xc5R\x80X\x98+'
-
-# SQL statement for posts_updates
-sqlUpdatePost = """
-INSERT INTO posts_updates(post_id, score, ratio, num_comments, timestamp_update)
-    VALUES(
-        ?,
-        ?,
-        ?,
-        ?,
-        ?
-    );
-"""
-
-# SQL statement for posts
-sqlNewPost = """
-INSERT INTO posts(post_id, link, subreddit, title, author, timestamp_created)
-    VALUES(
-        ?,
-        ?,
-        ?,
-        ?,
-        ?,
-        ?
-    );
-"""
 
 # landing page with text field
 @app.route('/', methods=['GET', 'POST'])
@@ -52,29 +29,22 @@ def home():
 @app.route('/analysis')
 def analysis():
     postID = utils.getPostID(session['url'])
-    bot = redditbot.RedditBot(postID)
+    bot = redditBot.RedditBot(postID)
     newData = bot.newPost()
-    newPostDB(newData)
+    with app.app_context():
+        g.db = redditDatabase.RedditDatabase(app.database)
+        g.db.newPost(newData)
+    p = Process(target=updatePost, args=(bot,))
+    p.start()
     return render_template('analysis.html')
 
-def connectDB():
-    return sqlite3.connect(app.database)
-
-def newPostDB(newData):
-    g.db = connectDB()
-
-    post_id = newData['post_id']
-    link = newData['link']
-    subreddit = newData['subreddit']
-    title = newData['title']
-    author = newData['author']
-    timestamp_created = newData['timestamp_created']
-    g.db.execute(sqlNewPost, (post_id, link, subreddit, title, author, timestamp_created))
-
-    g.db.commit()
-    g.db.close()
-
-def updatePostDB(updateData):
+def updatePost(bot):
+    with app.app_context():
+        g.db = redditDatabase.RedditDatabase(app.database)
+        for x in range(5):
+            updateData = bot.updateData()
+            g.db.updatePost(updateData)
+            time.sleep(300)
 
 # run app
 if __name__ == "__main__":

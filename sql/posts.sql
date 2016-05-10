@@ -4,5 +4,6 @@ CREATE TABLE posts (
 	subreddit VARCHAR (30),
 	title VARCHAR(300),
 	author VARCHAR(30),
-	timestamp INTEGER(12)
+	active BOOLEAN,
+	timestamp_created INTEGER(12)
 );

@@ -25,9 +25,12 @@ class RedditBot:
         self.updateTimestamp = utils.getTime()
         self.recentData = None
 
+    def get_submission(self):
+        return r.get_submission(submission_id=self.postID)
+
     def newPost(self):
         print("New post! %s" % (self.postID))
-        post = r.get_submission(submission_id=self.postID)
+        post = self.get_submission()
         newData = {
             'post_id': self.postID,
             'link': post.permalink,
@@ -39,8 +42,8 @@ class RedditBot:
         return newData
 
     def updateData(self):
-        print("Updating post %s" % (self.postID))
-        update = r.get_submission(submission_id=self.postID)
+        print("Updating post %s..." % (self.postID))
+        update =self.get_submission()
         newData = {
             'post_id': self.postID,
             'score': update.score,
@@ -48,5 +51,10 @@ class RedditBot:
             'num_comments': update.num_comments,
             'timestamp_update': utils.getTime()
         }
-        print("Caching data...")
+        print("Caching data for %s..." %(self.postID))
         return newData
+
+    def updateDataSpecified(self, interval, iterations):
+        print("Updating post %s" % (self.postID))
+        update = self.get_submission()
+        updateData
