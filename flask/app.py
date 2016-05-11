@@ -1,9 +1,12 @@
 # Standard
 from flask import Flask, render_template, redirect, url_for, request, session,\
-    flash, g
+    flash, g, jsonify
 import sqlite3
 import re
 import time
+import json
+# labels: list
+# data list
 from multiprocessing import Process
 
 # Private
@@ -22,21 +25,28 @@ app.secret_key = b'\xd0\x10\x0b$\x0fk\xbe%\xc6\x1b\xe4\xd1\xf0\xe0\xd4\x0210\xc5
 def home():
     if request.method == 'POST':
         session['url'] = request.form['url']
+        session['isBotOn'] = False
         return redirect(url_for('analysis'))
     return render_template('index.html')
 
 # analysis page that displays post data
 @app.route('/analysis')
 def analysis():
-    postID = utils.getPostID(session['url'])
-    bot = redditBot.RedditBot(postID)
-    newData = bot.newPost()
+    if not session['isBotOn']:
+        session['postID'] = utils.getPostID(session['url'])
+        bot = redditBot.RedditBot(session['postID'])
+        newData = bot.newPost()
+        with app.app_context():
+            g.db = redditDatabase.RedditDatabase(app.database)
+            g.db.newPost(newData)
+        p = Process(target=updatePost, args=(bot,))
+        p.start()
+        session['isBotOn'] = True
     with app.app_context():
         g.db = redditDatabase.RedditDatabase(app.database)
-        g.db.newPost(newData)
-    p = Process(target=updatePost, args=(bot,))
-    p.start()
-    return render_template('analysis.html')
+        information = g.db.getPost(session['postID'])
+        points = g.db.getPoints(session['postID'])
+    return render_template('analysis.html', points=json.dumps(points), information=json.dumps(information))
 
 def updatePost(bot):
     with app.app_context():
@@ -44,7 +54,7 @@ def updatePost(bot):
         for x in range(5):
             updateData = bot.updateData()
             g.db.updatePost(updateData)
-            time.sleep(300)
+            time.sleep(30)
 
 # run app
 if __name__ == "__main__":

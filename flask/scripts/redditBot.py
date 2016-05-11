@@ -6,19 +6,6 @@ from . import utils
 r = praw.Reddit(user_agent="Pulls post data information in" +
                            " intervals and stores it")
 
-def writetoDB(data):
-    sqlStatement = """
-    INSERT INTO post_updates(post_id, score, ratio, num_comments, timestamp_update)
-        VALUES(
-            %s,
-            %d,
-            %f,
-            %d,
-            %d
-        );
-    """
-
-
 class RedditBot:
     def __init__(self, postID):
         self.postID = postID

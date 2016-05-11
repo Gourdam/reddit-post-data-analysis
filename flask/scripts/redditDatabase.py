@@ -25,6 +25,37 @@ INSERT INTO posts(post_id, link, subreddit, title, author, timestamp_created)
     );
 """
 
+sqlGetPoints = """
+SELECT
+    score,
+    ratio,
+    num_comments,
+    timestamp_update
+FROM
+    posts_updates
+WHERE
+    post_id = ?;
+"""
+
+sqlGetPost = """
+SELECT
+    link,
+    subreddit,
+    title,
+    author
+FROM
+    posts
+WHERE
+    post_id = ?;
+"""
+
+def dict_factory(cursor, row):
+    d = {}
+    for idx,col in enumerate(cursor.description):
+        d[col[0]] = row[idx]
+    return d
+
+# REFACTOR CODE
 class RedditDatabase:
     def __init__(self, database):
         self.database = database
@@ -62,3 +93,24 @@ class RedditDatabase:
     def updatePost(self, updateData):
         arguments = self.updatePostTuple(updateData)
         self.updateDatabase(sqlUpdatePost, arguments)
+
+    # getting values from database
+
+    def getPost(self, post_id):
+        connection = self.connectDB()
+        connection.row_factory = dict_factory
+        c = connection.cursor()
+        c.execute(sqlGetPost, (post_id,))
+        data = c.fetchone()
+        c.close()
+        return data
+
+    def getPoints(self, post_id):
+        connection = self.connectDB()
+        connection.row_factory = dict_factory 
+        c = connection.cursor()
+        c.execute(sqlGetPoints, (post_id,))
+        data = c.fetchall()
+        c.close()
+        return data
+
