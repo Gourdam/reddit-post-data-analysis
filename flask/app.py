@@ -46,6 +46,8 @@ def analysis():
         g.db = redditDatabase.RedditDatabase(app.database)
         information = g.db.getPost(session['postID'])
         points = g.db.getPoints(session['postID'])
+        print(json.dumps(points))
+        print(json.dumps(information))
     return render_template('analysis.html', points=json.dumps(points), information=json.dumps(information))
 
 def updatePost(bot):

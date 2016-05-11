@@ -3,11 +3,17 @@
 <html>
     <head>
         <title>Reddata - Input a reddit URL!</title>
+        <script type="text/javascript">
+        var information = '{{information|safe}}';
+        var points = '{{points|safe}}';
+        console.log(information);
+        console.log(points);
+        </script>
     </head>
     <body>
         <h1>Analysis</h1>
-        <h2>{{ points }}</h2><br>
         <h2>{{ information }}</h2><br>
+        <h2>{{ points }}</h2><br>
         <h2>{{ num_comments }}</h2><br>
         <h2>{{ timestamp_update }}</h2><br>
     </body>
