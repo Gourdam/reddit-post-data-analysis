@@ -24,6 +24,7 @@ class RedditBot:
             'subreddit': post.subreddit.display_name,
             'title': post.title,
             'author': post.author.name,
+            'active': 1,
             'timestamp_created': int(post.created_utc)
         }
         return newData
@@ -40,8 +41,3 @@ class RedditBot:
         }
         print("Caching data for %s..." %(self.postID))
         return newData
-
-    def updateDataSpecified(self, interval, iterations):
-        print("Updating post %s" % (self.postID))
-        update = self.get_submission()
-        updateData

@@ -14,8 +14,9 @@ INSERT INTO posts_updates(post_id, score, ratio, num_comments, timestamp_update)
 
 # SQL statement for posts *MUST ADD active field later
 sqlNewPost = """
-INSERT INTO posts(post_id, link, subreddit, title, author, timestamp_created)
+INSERT INTO posts(post_id, link, subreddit, title, author, active, timestamp_created)
     VALUES(
+        ?,
         ?,
         ?,
         ?,
@@ -34,7 +35,9 @@ SELECT
 FROM
     posts_updates
 WHERE
-    post_id = ?;
+    post_id = ?
+ORDER BY
+    timestamp_update;
 """
 
 sqlGetPost = """
@@ -45,6 +48,24 @@ SELECT
     author
 FROM
     posts
+WHERE
+    post_id = ?;
+"""
+
+sqlgetPostState = """
+SELECT
+    active
+FROM
+    posts
+WHERE 
+    post_id = ?;
+"""
+
+sqlDeactivatePost = """
+UPDATE
+    posts
+SET
+    active = 0
 WHERE
     post_id = ?;
 """
@@ -69,8 +90,9 @@ class RedditDatabase:
         subreddit = newData['subreddit']
         title = newData['title']
         author = newData['author']
+        active = newData['active']
         timestamp_created = newData['timestamp_created']
-        return (post_id, link, subreddit, title, author, timestamp_created)
+        return (post_id, link, subreddit, title, author, active, timestamp_created)
 
     def updatePostTuple(self, updateData):
         post_id = updateData['post_id']
@@ -112,5 +134,40 @@ class RedditDatabase:
         c.execute(sqlGetPoints, (post_id,))
         data = c.fetchall()
         c.close()
-        return data
+        points = {
+            'score': [],
+            'ratio': [],
+            'num_comments': [],
+            'timestamp_update': []
+        }
+        for row in data:
+            points['score'].append(row['score'])
+            points['ratio'].append(row['ratio'])
+            points['num_comments'].append(row['num_comments'])
+            points['timestamp_update'].append(row['timestamp_update'])
+        if self.isSameValues(points):
+            self.deactivatePost(post_id)
+        return points
 
+    def allSame(self, items):
+        return all(x==items[0] for x in items)
+
+    def isSameValues(self, points):
+        if len(points['score']) >= 3:
+            for key, values in points.items():
+                if key != 'timestamp_update':
+                        if self.allSame(values):
+                            return 1
+            return 0
+
+    def isActivePost(self, post_id):
+        connection = self.connectDB()
+        connection.row_factory = dict_factory
+        c = connection.cursor()
+        c.execute(sqlgetPostState, (post_id,))
+        data = c.fetchone()
+        c.close()
+        return data['active']
+
+    def deactivatePost(self, post_id):
+        self.updateDatabase(sqlDeactivatePost, (post_id,))

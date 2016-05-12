@@ -46,17 +46,18 @@ def analysis():
         g.db = redditDatabase.RedditDatabase(app.database)
         information = g.db.getPost(session['postID'])
         points = g.db.getPoints(session['postID'])
-        print(json.dumps(points))
-        print(json.dumps(information))
     return render_template('analysis.html', points=json.dumps(points), information=json.dumps(information))
 
 def updatePost(bot):
     with app.app_context():
         g.db = redditDatabase.RedditDatabase(app.database)
-        for x in range(5):
+        while True:
+            if not g.db.isActivePost(bot.postID):
+                break
             updateData = bot.updateData()
             g.db.updatePost(updateData)
             time.sleep(30)
+        print("Post %s not active! Shutting it down" % bot.postID)
 
 # run app
 if __name__ == "__main__":
