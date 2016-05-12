@@ -115,6 +115,12 @@ class RedditDatabase:
     def updatePost(self, updateData):
         arguments = self.updatePostTuple(updateData)
         self.updateDatabase(sqlUpdatePost, arguments)
+        # Pulling all points when only 3 are needed. Must add an sql argument
+        points = self.getPoints(updateData['post_id'])
+        if self.isSameValues(points):
+            print("Post %s is stale!" % updateData['post_id'])
+            self.deactivatePost(updateData['post_id'])
+
 
     # getting values from database
 
@@ -145,21 +151,23 @@ class RedditDatabase:
             points['ratio'].append(row['ratio'])
             points['num_comments'].append(row['num_comments'])
             points['timestamp_update'].append(row['timestamp_update'])
-        # must move this somewhere else
-        if self.isSameValues(points):
-            self.deactivatePost(post_id)
         return points
 
     def allSame(self, items):
         return all(x==items[0] for x in items)
 
+    # count is >= 2 since score keeps changing from reddit algorithm
     def isSameValues(self, points):
         if len(points['score']) >= 3:
+            count = 0
             for key, values in points.items():
                 if key != 'timestamp_update':
-                        if self.allSame(values):
-                            return 1
-            return 0
+                    same_data = values[-3:]
+                    if self.allSame(same_data):
+                        count += 1
+            if count >= 2:
+                return 1
+        return 0
 
     def isActivePost(self, post_id):
         connection = self.connectDB()
@@ -172,3 +180,4 @@ class RedditDatabase:
 
     def deactivatePost(self, post_id):
         self.updateDatabase(sqlDeactivatePost, (post_id,))
+        print("Deactivating post %s" % post_id)

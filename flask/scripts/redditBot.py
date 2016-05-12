@@ -39,5 +39,5 @@ class RedditBot:
             'num_comments': update.num_comments,
             'timestamp_update': utils.getTime()
         }
-        print("Caching data for %s..." %(self.postID))
+        print("Sending data for %s to database..." %(self.postID))
         return newData
