@@ -42,11 +42,24 @@ def analysis():
         p = Process(target=updatePost, args=(bot,))
         p.start()
         session['isBotOn'] = True
+    '''
+    with app.app_context():
+        g.db = redditDatabase.RedditDatabase(app.database)
+        information = g.db.getPost(session['postID'])
+        points = g.db.getPoints(session['postID'])'''
+    return render_template('analysis.html')
+
+@app.route('/getpostupdate')
+def GETPostUpdate():
     with app.app_context():
         g.db = redditDatabase.RedditDatabase(app.database)
         information = g.db.getPost(session['postID'])
         points = g.db.getPoints(session['postID'])
-    return render_template('analysis.html', points=json.dumps(points), information=json.dumps(information))
+        data = {
+            'information': information,
+            'points': points
+        }
+        return json.dumps(data)
 
 def updatePost(bot):
     with app.app_context():
@@ -56,7 +69,7 @@ def updatePost(bot):
                 break
             updateData = bot.updateData()
             g.db.updatePost(updateData)
-            time.sleep(30)
+            time.sleep(180)
         print("Post %s not active! Shutting it down" % bot.postID)
 
 # run app
