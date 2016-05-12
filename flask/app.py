@@ -26,12 +26,12 @@ def home():
     if request.method == 'POST':
         session['url'] = request.form['url']
         session['isBotOn'] = False
-        return redirect(url_for('analysis'))
-    return render_template('index.html')
+        return redirect(url_for('results'))
+    return render_template('page.html')
 
 # analysis page that displays post data
-@app.route('/analysis')
-def analysis():
+@app.route('/results')
+def results():
     if not session['isBotOn']:
         session['postID'] = utils.getPostID(session['url'])
         bot = redditBot.RedditBot(session['postID'])
@@ -42,12 +42,11 @@ def analysis():
         p = Process(target=updatePost, args=(bot,))
         p.start()
         session['isBotOn'] = True
-    '''
     with app.app_context():
         g.db = redditDatabase.RedditDatabase(app.database)
         information = g.db.getPost(session['postID'])
-        points = g.db.getPoints(session['postID'])'''
-    return render_template('analysis.html')
+        points = g.db.getPoints(session['postID'])
+    return render_template('results.html', information=information, points=points)
 
 @app.route('/getpostupdate')
 def GETPostUpdate():
@@ -59,6 +58,7 @@ def GETPostUpdate():
             'information': information,
             'points': points
         }
+        print(data)
         return json.dumps(data)
 
 def updatePost(bot):
@@ -69,7 +69,7 @@ def updatePost(bot):
                 break
             updateData = bot.updateData()
             g.db.updatePost(updateData)
-            time.sleep(180)
+            time.sleep(30)
         print("Post %s not active! Shutting it down" % bot.postID)
 
 # run app

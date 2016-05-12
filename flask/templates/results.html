@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html id ="results" lang="en">
+
+<head>
+    
+
+    <script>{% include "/js/info.js" %}</script>
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Reddata - Reddit Data Analysis App</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="static/css/grayscale.css" rel="stylesheet">
+
+
+    <!-- Custom Fonts -->
+    <link href="static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#about">Stats</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#download">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <section id="about" class="container content-section text-center">
+        <div class="row">
+        <h2>Statistics</h2>
+        <h5>The following graphs display data on the specified post with respect to time.</h5>
+            <div class="col-md-4">
+                    <p>Author: <script>document.write(poster)</script></p>
+                    <canvas id="myChart" width="100" height="100" class="container content-canvas text-center"></canvas>
+                    <script src="http://localhost:5000/static/dist/Chart.js">
+                        
+                    </script>
+                    <script>
+                        var ctx = document.getElementById("myChart");
+                        //var myChart = new Chart(ctx);
+                        var myChart = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: localtime,
+                                datasets: [{
+                                    label: 'Points',
+                                    data: scores
+                                }]
+                            },
+                            options: {   
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero:false
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    </script>
+            </div>
+            <div class="col-md-4">
+            <p>Title: <script>document.write(titles)</script></p>
+                    <canvas id="myChart2" width="100" height="100" class="container content-canvas text-center"></canvas>
+                    <script src="http://localhost:5000/static/dist/Chart.js">
+                        
+                    </script>
+                    <script>
+                        var ctx2 = document.getElementById("myChart2");
+                        //var myChart = new Chart(ctx);
+                        var myChart2 = new Chart(ctx2, {
+                            type: 'line',
+                            data: {
+                                labels: localtime,
+                                datasets: [{
+                                    label: '# of Comments',
+                                    data:comments
+                                }]
+                            },
+                            options: {   
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero:false
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    </script>
+            </div>
+            <div class="col-md-4">
+            <p>Subreddit: <script>
+                    document.write(sub)
+                    </script></p>
+                    <canvas id="myChart3" width="100" height="100" class="container content-canvas text-center"></canvas>
+                    <script src="http://localhost:5000/static/dist/Chart.js">
+                        
+                    </script>
+                    <script>
+                        var ctx3 = document.getElementById("myChart3");
+                        //var myChart = new Chart(ctx);
+                        var myChart3 = new Chart(ctx3, {
+                            type: 'bar',
+                            data: {
+                                labels: localtime,
+                                datasets: [{
+                                    label: 'Upvote Ratio',
+                                    data: rat
+                                }]
+                            },
+                            options: {   
+                                scales: {
+                                    yAxes: [{
+                                        ticks: {
+                                            beginAtZero:true 
+                                        }
+                                    }]
+                                }
+                            }
+                        });
+                    </script>
+            </div>       
+         </div>
+    </section>
+
+
+
+    <!-- Download Section -->
+    <section id="download" class="content-section text-center">
+        <div class="download-section">
+            <div class="container">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <h2>About Reddata</h2>
+                    <p>Reddata is a web app that analyses data on a Reddit post. With the use of the Reddit API, a Python bot, and Chart.js, we can present all the reddit post information you can think of in graphs!!! GRAPHS!!! DID YOU HEAR THAT I SAID GRAPHS!!!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="container content-section text-center">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2">
+                <h2>Contact Start Bootstrap</h2>
+                <p>Not really tho ...</p>
+                <p><a href="mailto:feedback@startbootstrap.com">feedback@startbootstrap.com</a>
+                </p>
+                <ul class="list-inline banner-social-buttons">
+                    <li>
+                        <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                    </li>
+                    <li>
+                        <a href="https://plus.google.com/+Startbootstrap/posts" class="btn btn-default btn-lg"><i class="fa fa-google-plus fa-fw"></i> <span class="network-name">Google+</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <div id="map"></div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p>Copyright &copy; Reddata 2016</p>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="static/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="static/js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="static/js/jquery.easing.min.js"></script>
+
+    <!-- Google Maps API Key - Use your own API key to enable the map feature. More information on the Google Maps API can be found at https://developers.google.com/maps/ -->
+
+    <!-- Custom Theme JavaScript -->
+    <script src="static/js/grayscale.js"></script>
+
+</body>
+
+</html>

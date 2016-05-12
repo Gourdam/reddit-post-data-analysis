@@ -145,6 +145,7 @@ class RedditDatabase:
             points['ratio'].append(row['ratio'])
             points['num_comments'].append(row['num_comments'])
             points['timestamp_update'].append(row['timestamp_update'])
+        # must move this somewhere else
         if self.isSameValues(points):
             self.deactivatePost(post_id)
         return points
