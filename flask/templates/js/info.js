@@ -7,7 +7,6 @@ function httpGet(theUrl)
 }
 
 
-
 function convertTimestamp(timestamp) {
   var d = new Date(timestamp * 1000),	// Convert the passed timestamp to milliseconds
 		yyyy = d.getFullYear(),
@@ -39,16 +38,21 @@ var information = {{information|safe}};
 var points = {{points|safe}};
 
 var poster = information.author;
-var links = information.link;
+var postURL = information.link;
 var titles = information.title;
 var sub = information.subreddit;
+
+if (titles.length > 22){
+	elipses = "...";
+	titles = titles.concat(titles.substring(0,22), elipses);
+}
 
 var scores = points.score;
 var comments = points.num_comments;
 var times = points.timestamp_update;
 var rat = points.ratio; 
 
-var localtime = ["entry", "entry2", "entry3"];
+var localtime = ["entry"];
 
 for (var i = 0; i < times.length; i++) {
 	localtime[i] = convertTimestamp(times[i]);

@@ -72,7 +72,7 @@
         <h2>Statistics</h2>
         <h5>The following graphs display data on the specified post with respect to time.</h5>
             <div class="col-md-4">
-                    <p>Author: <script>document.write(poster)</script></p>
+                    <h6>Author: <script> document.write(poster)</script></h6>>
                     <canvas id="myChart" width="100" height="100" class="container content-canvas text-center"></canvas>
                     <script src="http://localhost:5000/static/dist/Chart.js">
                         
@@ -102,7 +102,7 @@
                     </script>
             </div>
             <div class="col-md-4">
-            <p>Title: <script>document.write(titles)</script></p>
+            <h6>Title: <a href=postURL> <script> document.write(titles)</script> </a></h6>
                     <canvas id="myChart2" width="100" height="100" class="container content-canvas text-center"></canvas>
                     <script src="http://localhost:5000/static/dist/Chart.js">
                         
@@ -132,9 +132,7 @@
                     </script>
             </div>
             <div class="col-md-4">
-            <p>Subreddit: <script>
-                    document.write(sub)
-                    </script></p>
+            <h6>Subreddit: <script> document.write(sub)</script></h6>>
                     <canvas id="myChart3" width="100" height="100" class="container content-canvas text-center"></canvas>
                     <script src="http://localhost:5000/static/dist/Chart.js">
                         
@@ -174,7 +172,7 @@
             <div class="container">
                 <div class="col-lg-8 col-lg-offset-2">
                     <h2>About Reddata</h2>
-                    <p>Reddata is a web app that analyses data on a Reddit post. With the use of the Reddit API, a Python bot, and Chart.js, we can present all the reddit post information you can think of in graphs!!! GRAPHS!!! DID YOU HEAR THAT I SAID GRAPHS!!!</p>
+                    <p>Reddata is a web app that analyses data related to a Reddit post. With the use of the Reddit API, a Python bot, and Chart.js, we present relevant data in a readable format. You can track the progress of the post throughout the day. However, keep in mind, if we sense that the data is stagnating then the bot will be turn off. Have fun.</p>
                 </div>
             </div>
         </div>
@@ -184,19 +182,22 @@
     <section id="contact" class="container content-section text-center">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
-                <h2>Contact Start Bootstrap</h2>
-                <p>Not really tho ...</p>
+                <h2>Contact Information</h2>
+                <p>Made by Jordan Hu and Shabab Ayub. Check us out on linkedin. If you like code, the github repo is pretty cool.</p>
                 <p><a href="mailto:feedback@startbootstrap.com">feedback@startbootstrap.com</a>
                 </p>
                 <ul class="list-inline banner-social-buttons">
                     <li>
-                        <a href="https://twitter.com/SBootstrap" class="btn btn-default btn-lg"><i class="fa fa-twitter fa-fw"></i> <span class="network-name">Twitter</span></a>
+                        <a href="https://ca.linkedin.com/in/jordan-hu-580b35109" class="btn btn-default btn-lg"><i class="fa fa-linkedin-square"></i> <span class="network-name">Jordan</span></a>
                     </li>
                     <li>
-                        <a href="https://github.com/IronSummitMedia/startbootstrap" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
+                        <a href="https://github.com/Gourdam/reddit-post-data-analysis" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
                     </li>
                     <li>
-                        <a href="https://plus.google.com/+Startbootstrap/posts" class="btn btn-default btn-lg"><i class="fa fa-google-plus fa-fw"></i> <span class="network-name">Google+</span></a>
+                        <a href="https://lh3.googleusercontent.com/-iycl-rdxqDg/UkM9YROQT4I/AAAAAAAAHoc/2s-AGamWzSw/w426-h517/Squirtle.png" class="btn btn-default btn-lg"><i class="fa fa-google-plus fa-fw"></i> <span class="network-name">Google+</span></a>
+                    </li>
+                    <li>
+                        <a href="https://ca.linkedin.com/in/shababayub" class="btn btn-default btn-lg"><i class="fa fa-linkedin-square"></i> <span class="network-name">Shabab</span></a>
                     </li>
                 </ul>
             </div>
