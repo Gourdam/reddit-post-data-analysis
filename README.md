@@ -5,9 +5,9 @@
 Reddata is a web-app that allows a user to visualize the data related to a Reddit post. 
 
 ##Background:
-The web-app parses a given Reddit post URL. Using a bot made with Python, the server continuously updates information regarding the specified requests to the Reddit API which is stored in a SQL database. Then, a JavaScript charting library, Chart.JS, is used to analyze and present the data in a user-friendly manner. An added feature allows the program to intelligently decides to stop requesting after a post stagnates in activity. 
+The web-app **parses a given Reddit post URL**. Using a bot made with **Python**, the server continuously updates information regarding the specified requests to the Reddit API which is stored in a **SQL database**. Then, a **JavaScript charting library, Chart.JS**, is used to **analyze and present the data** in a user-friendly manner. An added feature allows the program to intelligently decide to stop requesting after a post stagnates in activity. 
 
-The purpose of this web-app is to present and analyze relevant data (upvote ratio, points, number of comments) on a Reddit post.  It would especially be useful for smaller subreddits such as a university subreddit, to pinpoint what style of posts the population resonates with. Reddata essentially allows a user to get a glimpse into the psyche of the ever-active communities of Reddit!
+The purpose of this web-app is to present and analyze relevant data (upvote ratio, points, number of comments) on a Reddit post.  It would especially be **useful for smaller subreddits** such as a university subreddit, to pinpoint what style of posts the population resonates with. Reddata essentially allows a user to **get a glimpse into the psyche of the ever-active communities of Reddit!**
 
 The reason we made Reddata was because we wanted experience with web-development and data analytics. 
 
