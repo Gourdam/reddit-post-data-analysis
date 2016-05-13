@@ -10,6 +10,7 @@ body {
     font-family: Lora,"Helvetica Neue",Helvetica,Arial,sans-serif;
     color: #cf000f;
     background-color: #FFFFFF;
+    
 }
 
 html {
@@ -29,6 +30,8 @@ h6 {
     font-weight: 700;
     letter-spacing: 1px;
     color: #cf000f;
+    position: relative;
+    z-index: 1;
 }
 
 p {

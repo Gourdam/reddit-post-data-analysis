@@ -51,6 +51,9 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
+                     <li>
+                        <a href="/">Home</a>
+                    </li>
                     <li>
                         <a class="page-scroll" href="#about">Stats</a>
                     </li>
@@ -72,10 +75,9 @@
         <h2>Statistics</h2>
         <h5>The following graphs display data on the specified post with respect to time.</h5>
             <div class="col-md-4">
-                    <h6>Author: <script> document.write(poster)</script></h6>>
+                    <h6>Author: <script> document.write(poster)</script></h6>
                     <canvas id="myChart" width="100" height="100" class="container content-canvas text-center"></canvas>
                     <script src="http://localhost:5000/static/dist/Chart.js">
-                        
                     </script>
                     <script>
                         var ctx = document.getElementById("myChart");
@@ -102,10 +104,10 @@
                     </script>
             </div>
             <div class="col-md-4">
-            <h6>Title: <a href=postURL> <script> document.write(titles)</script> </a></h6>
+            <h6><script> document.write('<a href="' + postURL + '"> Title: </a>'); </script> <script> document.write(titles)
+            </script></h6>
                     <canvas id="myChart2" width="100" height="100" class="container content-canvas text-center"></canvas>
                     <script src="http://localhost:5000/static/dist/Chart.js">
-                        
                     </script>
                     <script>
                         var ctx2 = document.getElementById("myChart2");
@@ -132,10 +134,9 @@
                     </script>
             </div>
             <div class="col-md-4">
-            <h6>Subreddit: <script> document.write(sub)</script></h6>>
+            <h6>Subreddit: <script> document.write(sub)</script></h6>
                     <canvas id="myChart3" width="100" height="100" class="container content-canvas text-center"></canvas>
                     <script src="http://localhost:5000/static/dist/Chart.js">
-                        
                     </script>
                     <script>
                         var ctx3 = document.getElementById("myChart3");
@@ -172,7 +173,7 @@
             <div class="container">
                 <div class="col-lg-8 col-lg-offset-2">
                     <h2>About Reddata</h2>
-                    <p>Reddata is a web app that analyses data related to a Reddit post. With the use of the Reddit API, a Python bot, and Chart.js, we present relevant data in a readable format. You can track the progress of the post throughout the day. However, keep in mind, if we sense that the data is stagnating then the bot will be turn off. Have fun.</p>
+                    <p>Reddata is a web app that analyses data related to a Reddit post. With the use of the Reddit API, a Python bot, and Chart.js, we present relevant data in a readable format. You can track the progress of the post throughout the day. However, keep in mind, if we sense that the data is stagnating then the bot will turn off. Have fun.</p>
                 </div>
             </div>
         </div>
@@ -191,13 +192,13 @@
                         <a href="https://ca.linkedin.com/in/jordan-hu-580b35109" class="btn btn-default btn-lg"><i class="fa fa-linkedin-square"></i> <span class="network-name">Jordan</span></a>
                     </li>
                     <li>
+                        <a href="https://ca.linkedin.com/in/shababayub" class="btn btn-default btn-lg"><i class="fa fa-linkedin-square"></i> <span class="network-name">Shabab</span></a>
+                    </li>
+                    <li>
                         <a href="https://github.com/Gourdam/reddit-post-data-analysis" class="btn btn-default btn-lg"><i class="fa fa-github fa-fw"></i> <span class="network-name">Github</span></a>
                     </li>
                     <li>
                         <a href="https://lh3.googleusercontent.com/-iycl-rdxqDg/UkM9YROQT4I/AAAAAAAAHoc/2s-AGamWzSw/w426-h517/Squirtle.png" class="btn btn-default btn-lg"><i class="fa fa-google-plus fa-fw"></i> <span class="network-name">Google+</span></a>
-                    </li>
-                    <li>
-                        <a href="https://ca.linkedin.com/in/shababayub" class="btn btn-default btn-lg"><i class="fa fa-linkedin-square"></i> <span class="network-name">Shabab</span></a>
                     </li>
                 </ul>
             </div>

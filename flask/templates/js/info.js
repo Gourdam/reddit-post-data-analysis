@@ -42,9 +42,11 @@ var postURL = information.link;
 var titles = information.title;
 var sub = information.subreddit;
 
+
 if (titles.length > 22){
 	elipses = "...";
-	titles = titles.concat(titles.substring(0,22), elipses);
+	titles = titles.substring(0,22) + " -...";
+	console.log(titles);
 }
 
 var scores = points.score;

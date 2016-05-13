@@ -56,7 +56,8 @@ def updatePost(bot):
                 break
             updateData = bot.updateData()
             g.db.updatePost(updateData)
-            time.sleep(30)
+            print("Post %s updated!" % bot.postID)
+            time.sleep(180)
         print("Post %s not active!" % bot.postID)
 
 # run app
