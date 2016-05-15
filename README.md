@@ -34,6 +34,9 @@ Werkzeug==0.11.9
 ```
 ####Example screenshots:
 ![alt tag](https://github.com/Gourdam/reddit-post-data-analysis/blob/master/pictures/reddata-index.png)
+![alt tag](https://github.com/Gourdam/reddit-post-data-analysis/blob/master/pictures/reddata-stats.png)
+![alt tag](https://github.com/Gourdam/reddit-post-data-analysis/blob/master/pictures/reddata-stats-updated.png)
+![alt tag](https://github.com/Gourdam/reddit-post-data-analysis/blob/master/pictures/reddata-stats-updated2.png)
 
 ##Further Implementation: 
 - Improve user experience
