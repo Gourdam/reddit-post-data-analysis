@@ -32,7 +32,8 @@ six==1.10.0
 update-checker==0.11
 Werkzeug==0.11.9
 ```
-
+####Example screenshots:
+![alt tag](https://raw.githubusercontent.com/username/projectname/reddit-post-data-analysis/pictures/reddata-index.png)
 
 ##Further Implementation: 
 - Improve user experience
