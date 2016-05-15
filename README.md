@@ -2,7 +2,7 @@
 #####by Jordan Hu and Shabab Ayub
 
 ###Description
-Reddata is a web-app that allows a user to visualize the data related to a Reddit post. 
+Reddata is a web-app that allows a user to visualize the data related to a Reddit post. Scroll down to check out pictures!
 
 ##Background:
 The web-app **parses a given Reddit post URL**. Using a bot made with **Python**, the server continuously updates information regarding the specified requests to the Reddit API which is stored in a **SQL database**. Then, a **JavaScript charting library, Chart.JS**, is used to **analyze and present the data** in a user-friendly manner. An added feature allows the program to intelligently decide to stop requesting after a post stagnates in activity. 
