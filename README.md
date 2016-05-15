@@ -33,7 +33,7 @@ update-checker==0.11
 Werkzeug==0.11.9
 ```
 ####Example screenshots:
-![alt tag](https://raw.githubusercontent.com/Gourdam/reddit-post-data-analysis/pictures/reddata-index.png)
+![alt tag](https://github.com/Gourdam/reddit-post-data-analysis/blob/master/pictures/reddata-index.png)
 
 ##Further Implementation: 
 - Improve user experience
