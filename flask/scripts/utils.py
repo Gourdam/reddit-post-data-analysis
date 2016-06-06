@@ -5,7 +5,10 @@ import calendar
 def getPostID(url):
     urlRegex = re.compile(r'/comments/(.*?)/')
     post_id = urlRegex.search(url)
-    return post_id.group(1)
+    try:
+    	return post_id.group(1)
+    except:
+    	return False
 
 def getTime():
     date = datetime.utcnow()

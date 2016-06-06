@@ -48,15 +48,15 @@
                             <input type="text" name = "url" class= "search" placeholder="Search...">
                             <input type="submit" class="search button" value="Search">
                         </form>
+                              {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}</p>
+      {% endif %}
                     </div>
                 </div>
             </div>
         </div>
     </header>
 
-
-    <!-- Map Section -->
-    <div id="map"></div>
 
     <!-- Footer -->
     <footer>

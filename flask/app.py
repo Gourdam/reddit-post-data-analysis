@@ -9,7 +9,7 @@ import json
 # data list
 from multiprocessing import Process
 
-# Private
+# Private - utils is the regex, redditBot is the bot class, redditDatabase is the actually storing and extracting from database
 from scripts import utils, redditBot, redditDatabase
 
 # create application object
@@ -21,13 +21,19 @@ app.database = "proto_database.db"
 app.secret_key = b'\xd0\x10\x0b$\x0fk\xbe%\xc6\x1b\xe4\xd1\xf0\xe0\xd4\x0210\xc5R\x80X\x98+'
 
 # landing page with text field
+# route() decorator to tell Flask what URL should trigger our function.
 @app.route('/', methods=['GET', 'POST'])
 def home():
+    error = None
     if request.method == 'POST':
         session['url'] = request.form['url']
         session['isBotOn'] = False
-        return redirect(url_for('results'))
-    return render_template('page.html')
+        if (utils.getPostID(session['url']) == False):
+            error = "You're tripping! Enter a reddit post URL!"
+        else:
+            return redirect(url_for('results'))
+    return render_template('page.html', error = error)
+
 
 # analysis page that displays post data
 @app.route('/results')
