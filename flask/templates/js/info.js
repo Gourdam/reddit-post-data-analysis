@@ -33,9 +33,9 @@ function convertTimestamp(timestamp) {
 		
 	return time;
 }
-//var data = httpGet('/getpostupdate'); 
-var information = {{information|safe}};
-var points = {{points|safe}};
+//passing in the dictionaries through the templates from app.py, they now become javascript objects through the double braces 
+var information = {{information}};
+var points = {{points}};
 
 var poster = information.author;
 var postURL = information.link;
@@ -44,7 +44,6 @@ var sub = information.subreddit;
 
 
 if (titles.length > 22){
-	elipses = "...";
 	titles = titles.substring(0,22) + " -...";
 	console.log(titles);
 }
@@ -56,6 +55,7 @@ var rat = points.ratio;
 
 var localtime = ["entry"];
 
+//converts every timestamp in the times array to something humans can read
 for (var i = 0; i < times.length; i++) {
 	localtime[i] = convertTimestamp(times[i]);
 }
