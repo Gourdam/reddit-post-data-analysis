@@ -63,7 +63,7 @@ def updatePost(bot):
             g.db.updatePost(updateData)
             print("Post %s updated!" % bot.postID)
             # post pulls every 300 seconds
-            time.sleep(300)
+            time.sleep(60)
         print("Post %s not active!" % bot.postID)
 
 # run app
