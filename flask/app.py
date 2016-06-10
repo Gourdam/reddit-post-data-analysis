@@ -1,4 +1,3 @@
-# test change
 # Standard
 from flask import Flask, render_template, redirect, url_for, request, session,\
     flash, g, jsonify
@@ -23,7 +22,6 @@ app.secret_key = b'\xd0\x10\x0b$\x0fk\xbe%\xc6\x1b\xe4\xd1\xf0\xe0\xd4\x0210\xc5
 
 # landing page with text field
 # route() decorator to tell Flask what URL should trigger our function.
-# test 1
 @app.route('/', methods=['GET', 'POST'])
 def home():
     error = None
@@ -37,7 +35,6 @@ def home():
     return render_template('page.html', error = error)
 
 # analysis page that displays post data
-# test 2
 @app.route('/results')
 def results():
     if not session['isBotOn']:

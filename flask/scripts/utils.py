@@ -15,19 +15,4 @@ def getTime():
     utc_time = calendar.timegm(date.utctimetuple())
     return utc_time
 
-'''
-fdsafsaf
-fdsalkjflsadfasdf
-
-fdsjafldksalfsa
-dlfkljsdlfj
-fjsdlfsdk
-
-2398123129893j
-
-
-
-
-fsdfjsldkfsjdfjlsk
-'''
 
