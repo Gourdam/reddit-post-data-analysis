@@ -40,7 +40,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/jordan/git/reddit-post-data-analysis/venv"
+VIRTUAL_ENV="/home/shabab/repos/reddata/reddit-post-data-analysis/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

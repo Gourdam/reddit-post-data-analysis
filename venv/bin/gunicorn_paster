@@ -1,4 +1,4 @@
-#!/home/jordan/git/reddit-post-data-analysis/venv/bin/python3
+#!/home/shabab/repos/reddata/reddit-post-data-analysis/venv/bin/python3
 
 # -*- coding: utf-8 -*-
 import re
