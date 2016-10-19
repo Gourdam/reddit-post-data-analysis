@@ -1,7 +1,6 @@
 # Standard
 from flask import Flask, render_template, redirect, url_for, request, session,\
     flash, g, jsonify
-import sqlite3
 import re
 import time
 
@@ -15,8 +14,12 @@ from scripts import utils, redditBot, redditDatabase
 # create application object
 app = Flask(__name__)
 # change database name later
-app.database = "proto_database.db"
-
+app.database =  {
+    'database': 'reddit_data',
+    'user': 'reddit_data',
+    'password': 'reddit_data',
+    'host': 'localhost'
+}
 # secret key for cookies *MUST CHANGE FOR SECURITY*
 app.secret_key = b'\xd0\x10\x0b$\x0fk\xbe%\xc6\x1b\xe4\xd1\xf0\xe0\xd4\x0210\xc5R\x80X\x98+'
 
@@ -32,7 +35,7 @@ def home():
             error = "You're tripping! Enter a reddit post URL!"
         else:
             return redirect(url_for('results'))
-    return render_template('page.html', error = error)
+    return render_template('page.html', error=error)
 
 # analysis page that displays post data
 @app.route('/results')
