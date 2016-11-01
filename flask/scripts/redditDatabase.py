@@ -1,28 +1,29 @@
-import sqlite3
+import psycopg2
+import psycopg2.extras
 
 # SQL statement for posts_updates
 sqlUpdatePost = """
 INSERT INTO posts_updates(post_id, score, ratio, num_comments, timestamp_update)
     VALUES(
-        ?,
-        ?,
-        ?,
-        ?,
-        ?
+        %s,
+        %s,
+        %s,
+        %s,
+        %s
     );
 """
 
-# SQL statement for posts 
+# SQL statement for posts
 sqlNewPost = """
 INSERT INTO posts(post_id, link, subreddit, title, author, active, timestamp_created)
     VALUES(
-        ?,
-        ?,
-        ?,
-        ?,
-        ?,
-        ?,
-        ?
+        %s,
+        %s,
+        %s,
+        %s,
+        %s,
+        %s,
+        %s
     );
 """
 
@@ -35,7 +36,7 @@ SELECT
 FROM
     posts_updates
 WHERE
-    post_id = ?
+    post_id = %s
 ORDER BY
     timestamp_update;
 """
@@ -49,7 +50,7 @@ SELECT
 FROM
     posts
 WHERE
-    post_id = ?;
+    post_id = %s;
 """
 
 sqlgetPostState = """
@@ -57,20 +58,20 @@ SELECT
     active
 FROM
     posts
-WHERE 
-    post_id = ?;
+WHERE
+    post_id = %s;
 """
 
 sqlDeactivatePost = """
 UPDATE
     posts
 SET
-    active = 0
+    active = '0'
 WHERE
-    post_id = ?;
+    post_id = %s;
 """
 #converts the tuples(from the database) into a dictionary for ease of access
-def dict_factory(cursor, row):
+def dict_factory(cursor, row): 
     d = {}
     for idx,col in enumerate(cursor.description):
         d[col[0]] = row[idx]
@@ -79,10 +80,16 @@ def dict_factory(cursor, row):
 # REFACTOR CODE
 class RedditDatabase:
     def __init__(self, database):
-        self.database = database
+        self.database = database['database']
+        self.user = database['user']
+        self.password = database['password']
+        self.host = database['host']
 
     def connectDB(self):
-        return sqlite3.connect(self.database)
+        return psycopg2.connect(database=self.database,
+                                user=self.user,
+                                password=self.password,
+                                host=self.host)
 #turns newData from redditBot into a tuple to store in database posts table
     def newPostTuple(self, newData):
         post_id = newData['post_id']
@@ -105,8 +112,10 @@ class RedditDatabase:
 #arguments is a generic parameter that takes in the tuples, this function allows us to commit anything to the database
     def updateDatabase(self, sqlStatement, arguments):
         database = self.connectDB()
-        database.execute(sqlStatement, arguments)
+        cursor = database.cursor()
+        cursor.execute(sqlStatement, arguments)
         database.commit()
+        cursor.close()
         database.close()
 #updates the database with a new post
     def newPost(self, newData):
@@ -127,8 +136,7 @@ class RedditDatabase:
 #get the individual post from the database
     def getPost(self, post_id):
         connection = self.connectDB()
-        connection.row_factory = dict_factory
-        c = connection.cursor()
+        c = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
         c.execute(sqlGetPost, (post_id,))
         data = c.fetchone()
         c.close()
@@ -136,8 +144,7 @@ class RedditDatabase:
 #get the points from the database
     def getPoints(self, post_id):
         connection = self.connectDB()
-        connection.row_factory = dict_factory 
-        c = connection.cursor()
+        c = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
         c.execute(sqlGetPoints, (post_id,))
         data = c.fetchall() #fetches all the rows, iterate through the rows
         c.close()
@@ -149,10 +156,10 @@ class RedditDatabase:
         }
         #iterates through the rows to add to the points dictionary
         for row in data:
-            points['score'].append(row['score'])
-            points['ratio'].append(row['ratio'])
-            points['num_comments'].append(row['num_comments'])
-            points['timestamp_update'].append(row['timestamp_update'])
+            points['score'].append(float(row['score']))
+            points['ratio'].append(float(row['ratio']))
+            points['num_comments'].append(float(row['num_comments']))
+            points['timestamp_update'].append(float(row['timestamp_update']))
         return points
 
 #all only evaluates true if all 3 comparisons are true
@@ -174,12 +181,11 @@ class RedditDatabase:
 
     def isActivePost(self, post_id):
         connection = self.connectDB()
-        connection.row_factory = dict_factory
-        c = connection.cursor()
+        c = connection.cursor(cursor_factory=psycopg2.extras.DictCursor)
         c.execute(sqlgetPostState, (post_id,))
         data = c.fetchone()
         c.close()
-        return data['active']
+        return int(data['active'])
 
     def deactivatePost(self, post_id):
         self.updateDatabase(sqlDeactivatePost, (post_id,))
