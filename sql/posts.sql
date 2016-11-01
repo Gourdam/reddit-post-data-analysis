@@ -5,5 +5,5 @@ CREATE TABLE posts (
 	title VARCHAR(300),
 	author VARCHAR(30),
 	active BOOLEAN,
-	timestamp_created INTEGER(12)
+	timestamp_created NUMERIC
 );

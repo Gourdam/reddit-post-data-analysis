@@ -37,10 +37,10 @@ function convertTimestamp(timestamp) {
 var information = {{information}};
 var points = {{points}};
 
-var poster = information.author;
-var postURL = information.link;
-var titles = information.title;
-var sub = information.subreddit;
+var poster = information[3];
+var postURL = information[0];
+var titles = information[2];
+var sub = information[1];
 
 
 if (titles.length > 22){

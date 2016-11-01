@@ -54,6 +54,7 @@ def results():
         g.db = redditDatabase.RedditDatabase(app.database)
         information = g.db.getPost(session['postID'])
         points = g.db.getPoints(session['postID'])
+
     return render_template('results.html', information=information, points=points)
 
 def updatePost(bot):

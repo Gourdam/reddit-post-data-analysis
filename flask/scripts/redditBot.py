@@ -1,5 +1,4 @@
 import praw
-#PRAW =  “Python Reddit API Wrapper”, python package that allows for access to reddit’s API.
 import sqlite3
 
 from . import utils
@@ -27,7 +26,7 @@ class RedditBot:
             'subreddit': post.subreddit.display_name,
             'title': post.title,
             'author': post.author.name,
-            'active': True,
+            'active': '1',
             'timestamp_created': int(post.created_utc)
         }
         return newData

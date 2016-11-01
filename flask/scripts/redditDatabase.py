@@ -66,12 +66,12 @@ sqlDeactivatePost = """
 UPDATE
     posts
 SET
-    active = 0
+    active = '0'
 WHERE
     post_id = %s;
 """
 #converts the tuples(from the database) into a dictionary for ease of access
-def dict_factory(cursor, row):
+def dict_factory(cursor, row): 
     d = {}
     for idx,col in enumerate(cursor.description):
         d[col[0]] = row[idx]
@@ -156,10 +156,10 @@ class RedditDatabase:
         }
         #iterates through the rows to add to the points dictionary
         for row in data:
-            points['score'].append(row['score'])
-            points['ratio'].append(row['ratio'])
-            points['num_comments'].append(row['num_comments'])
-            points['timestamp_update'].append(row['timestamp_update'])
+            points['score'].append(float(row['score']))
+            points['ratio'].append(float(row['ratio']))
+            points['num_comments'].append(float(row['num_comments']))
+            points['timestamp_update'].append(float(row['timestamp_update']))
         return points
 
 #all only evaluates true if all 3 comparisons are true
@@ -185,7 +185,7 @@ class RedditDatabase:
         c.execute(sqlgetPostState, (post_id,))
         data = c.fetchone()
         c.close()
-        return data['active']
+        return int(data['active'])
 
     def deactivatePost(self, post_id):
         self.updateDatabase(sqlDeactivatePost, (post_id,))
