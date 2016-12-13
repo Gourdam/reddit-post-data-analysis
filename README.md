@@ -1,5 +1,5 @@
 ## Reddata - Reddit Post Data Analysis Web-app
-#####by Jordan Hu and Shabab Ayub
+#####by Jordan Hu and Shabab Ayub - http://reddata.herokuapp.com/
 
 ###Description
 Reddata is a web-app that allows a user to visualize the data related to a Reddit post. Scroll down to check out pictures!
