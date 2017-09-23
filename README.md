@@ -17,7 +17,7 @@ The reason we made Reddata was because we wanted experience with web-development
 ![alt tag](https://github.com/Gourdam/reddit-post-data-analysis/blob/master/pictures/reddata-stats-updated.png)
 ![alt tag](https://github.com/Gourdam/reddit-post-data-analysis/blob/master/pictures/reddata-stats-updated2.png)
 
-##Further Implementation : 
+## Further Implementation : 
 - Improve user experience
 - Implement error handling
 - Test every feature of the web-app
